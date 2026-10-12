@@ -7,12 +7,11 @@
 # Fast to build; the binary is dynamically linked against glibc, so the
 # runtime must provide a compatible glibc (bookworm = 2.36).
 #
-# NOTE: update RELEASE_TAG and RELEASE_SHA256 to a real release of this
-# repository (gh release create v1.0.0 ...) before building this image;
-# the placeholder checksum below will fail the ADD on purpose.
+# Update RELEASE_TAG and RELEASE_SHA256 together on every new release
+# (the checksum comes from the release's SHA256SUMS file).
 
 ARG RELEASE_TAG=v1.0.0
-ARG RELEASE_SHA256=0000000000000000000000000000000000000000000000000000000000000000
+ARG RELEASE_SHA256=e2a216aa596914ce72663e6b111bf24192cb59216ddbe84c76d5c352c64e8cec
 
 FROM debian:bookworm-slim AS runtime
 ARG RELEASE_TAG

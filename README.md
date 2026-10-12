@@ -104,8 +104,9 @@ glibc 2.36): use it on distributions with glibc >= 2.36 or on the
 
 For a Docker image that compiles nothing, use the runtime image, which
 downloads the release binary pinned by tag and checksum (builds in
-seconds). Before the first release, update `RELEASE_TAG` and
-`RELEASE_SHA256` in `Dockerfile.runtime` with real values:
+seconds). The tag and checksum below refer to release `v1.0.0`; update
+them together on every new release (the checksum comes from the
+release's `SHA256SUMS` file):
 
 ```sh
 docker build -f Dockerfile.runtime -t rs-http-apilab:latest .
