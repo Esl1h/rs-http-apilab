@@ -120,7 +120,7 @@ reproducibility or speed.
 
 ## Endpoints
 
-Summary; the full contract is in `docs/endpoints.md` (in Portuguese).
+Summary; the full contract is in `docs/endpoints.md`.
 
 | Group | Endpoint | Method | Description |
 | --- | --- | --- | --- |
@@ -327,5 +327,6 @@ Avisos:
   deve ser exposta a redes não controladas.
 - Toolchain fixado em `rust-toolchain.toml` (rustc 1.98.1) e
   dependências travadas pelo `Cargo.lock`; builds usam `--locked`.
-- A documentação completa do contrato (`docs/endpoints.md` e
-  `docs/testing.md`) está em português, herdada do projeto original.
+- A documentação completa do contrato (`docs/endpoints.md`,
+  `docs/testing.md` e a especificação OpenAPI) está em inglês; este
+  resumo em português é a visão geral.
