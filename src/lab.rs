@@ -185,13 +185,20 @@ pub async fn status_code(ctx: Ctx) -> Response {
             .body(Body::empty())
             .expect("static response parts are valid");
     }
-    ctx.json(
+    let mut resp = ctx.json(
         code,
         &StatusBody {
             requested_status: code,
             request_id: ctx.request_id.clone(),
         },
-    )
+    );
+    // hyper writes "<none>" as the reason phrase of codes it does not
+    // name (299, 499, 520...); send a plain word instead.
+    if resp.status().canonical_reason().is_none() {
+        resp.extensions_mut()
+            .insert(hyper::ext::ReasonPhrase::from_static(b"Unknown"));
+    }
+    resp
 }
 
 // response_marker serves the fixed marker body for response inspection
