@@ -18,8 +18,9 @@ struct TicketRequest {
     description: String,
     #[serde(default)]
     severity: String,
+    // Option so an explicit `null` reads as "no tags" instead of a 400
     #[serde(default)]
-    tags: Vec<String>,
+    tags: Option<Vec<String>>,
 }
 
 // create validates and stores a new synthetic ticket.
@@ -31,6 +32,7 @@ pub async fn create(ctx: Ctx) -> Response {
         Ok(b) => b,
         Err(resp) => return resp,
     };
+    let tags = body.tags.unwrap_or_default();
     let mut errs: Vec<String> = Vec::new();
     if body.title.is_empty() || body.title.len() > MAX_TITLE_LEN {
         errs.push(format!(
@@ -51,13 +53,13 @@ pub async fn create(ctx: Ctx) -> Response {
             body.severity
         ));
     }
-    if body.tags.len() > MAX_TAGS {
+    if tags.len() > MAX_TAGS {
         errs.push(format!(
             "\"tags\" must have at most {MAX_TAGS} entries, got {}",
-            body.tags.len()
+            tags.len()
         ));
     }
-    for tag in &body.tags {
+    for tag in &tags {
         if tag.len() > MAX_TAG_LEN {
             errs.push(format!(
                 "tag \"{tag}\" must be at most {MAX_TAG_LEN} characters"
@@ -71,7 +73,7 @@ pub async fn create(ctx: Ctx) -> Response {
     let ticket = ctx
         .shared
         .st
-        .ticket_add(body.title, body.description, body.severity, body.tags);
+        .ticket_add(body.title, body.description, body.severity, tags);
     ctx.json(201, &ticket)
 }
 

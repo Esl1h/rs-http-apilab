@@ -76,4 +76,8 @@ http POST /api/v1/tickets -H 'Content-Type: application/json' \
 	-d '{"title":"T","description":"","severity":"low","tags":["a","b","c","d","e","f","g","h","i","j","k"]}'
 expect_status limits 422 'more than 10 tags is 422'
 
+http POST /api/v1/tickets -H 'Content-Type: application/json' \
+	-d '{"title":"T","severity":"low","tags":null}'
+expect_status errors 201 'null tags read as no tags'
+
 summary
