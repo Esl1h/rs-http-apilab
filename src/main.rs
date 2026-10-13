@@ -83,6 +83,7 @@ async fn main() {
         }
     };
     let read_timeout = Duration::from_millis(conf.read_timeout_ms as u64);
+    tokio::spawn(exit_on_signal());
 
     loop {
         let (stream, _remote_addr) = match listener.accept().await {
@@ -113,6 +114,19 @@ async fn main() {
             }
         });
     }
+}
+
+// exit_on_signal makes SIGTERM/SIGINT end the process: as PID 1 in a
+// container the kernel ignores signals that have no handler, so
+// `docker stop` would otherwise wait for its SIGKILL timeout.
+async fn exit_on_signal() {
+    let mut term = tokio::signal::unix::signal(tokio::signal::unix::SignalKind::terminate())
+        .expect("install SIGTERM handler");
+    tokio::select! {
+        _ = term.recv() => {}
+        _ = tokio::signal::ctrl_c() => {}
+    }
+    std::process::exit(0);
 }
 
 // Connection-level errors (client resets, oversized heads, malformed
