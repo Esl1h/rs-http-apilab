@@ -32,8 +32,8 @@ struct UsersPage {
 
 // parse_id validates a numeric path id and answers 400 when malformed.
 fn parse_id(ctx: &Ctx, raw: &str) -> Result<u64, Option<Response>> {
-    match raw.parse::<u64>() {
-        Ok(id) if id >= 1 => Ok(id),
+    match raw.parse::<i64>() {
+        Ok(id) if id >= 1 => Ok(id as u64),
         Ok(id) => Err(Some(ctx.error(
             400,
             "invalid_id",

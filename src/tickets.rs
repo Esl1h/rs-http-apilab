@@ -80,8 +80,8 @@ pub async fn create(ctx: Ctx) -> Response {
 // show returns one synthetic ticket by numeric id.
 pub async fn show(ctx: Ctx) -> Response {
     let raw = &ctx.params[0];
-    let id = match raw.parse::<u64>() {
-        Ok(id) if id >= 1 => id,
+    let id = match raw.parse::<i64>() {
+        Ok(id) if id >= 1 => id as u64,
         Ok(id) => {
             return ctx.error(
                 400,
