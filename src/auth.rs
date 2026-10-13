@@ -55,7 +55,7 @@ pub async fn login(ctx: Ctx) -> Response {
     if let Err(resp) = ctx.require_json() {
         return resp;
     }
-    let body: LoginRequest = match ctx.parse_json() {
+    let body: LoginRequest = match ctx.parse_object() {
         Ok(b) => b,
         Err(resp) => return resp,
     };

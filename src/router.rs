@@ -116,6 +116,16 @@ impl Ctx {
         })
     }
 
+    // parse_object is parse_json for struct payloads: serde also builds
+    // a struct from a JSON array (fields by position), which would turn
+    // `[]` into an all-defaults body instead of a 400.
+    pub fn parse_object<T: serde::de::DeserializeOwned>(&self) -> Result<T, Response> {
+        if self.body.trim_ascii_start().first() == Some(&b'[') {
+            return Err(self.error(400, "invalid_json", "request body must be a JSON object"));
+        }
+        self.parse_json()
+    }
+
     pub fn query_param(&self, key: &str) -> Option<&str> {
         self.query.get(key).map(|v| v.as_str())
     }

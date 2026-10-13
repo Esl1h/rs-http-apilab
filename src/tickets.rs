@@ -27,7 +27,7 @@ pub async fn create(ctx: Ctx) -> Response {
     if let Err(resp) = ctx.require_json() {
         return resp;
     }
-    let body: TicketRequest = match ctx.parse_json() {
+    let body: TicketRequest = match ctx.parse_object() {
         Ok(b) => b,
         Err(resp) => return resp,
     };

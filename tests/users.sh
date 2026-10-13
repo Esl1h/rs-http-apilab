@@ -88,4 +88,7 @@ expect_status limits 400 'a non-numeric per_page is 400'
 http GET '/api/v1/users?page=99999&per_page=5'
 expect_status limits 422 'a page beyond the last one is 422'
 
+http POST /api/v1/users -H 'Content-Type: application/json' -d '[]'
+expect_status errors 400 'create with a JSON array body is 400'
+
 summary

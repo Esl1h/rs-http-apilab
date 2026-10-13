@@ -46,7 +46,7 @@ pub async fn export(ctx: Ctx) -> Response {
     if let Err(resp) = ctx.require_json() {
         return resp;
     }
-    let body: ExportRequest = match ctx.parse_json() {
+    let body: ExportRequest = match ctx.parse_object() {
         Ok(b) => b,
         Err(resp) => return resp,
     };

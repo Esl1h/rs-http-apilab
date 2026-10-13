@@ -195,7 +195,7 @@ pub async fn create(ctx: Ctx) -> Response {
     if let Err(resp) = ctx.require_json() {
         return resp;
     }
-    let body: UserBody = match ctx.parse_json() {
+    let body: UserBody = match ctx.parse_object() {
         Ok(b) => b,
         Err(resp) => return resp,
     };
@@ -219,7 +219,7 @@ pub async fn replace(ctx: Ctx) -> Response {
     if let Err(resp) = ctx.require_json() {
         return resp;
     }
-    let body: UserBody = match ctx.parse_json() {
+    let body: UserBody = match ctx.parse_object() {
         Ok(b) => b,
         Err(resp) => return resp,
     };
