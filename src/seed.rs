@@ -25,7 +25,7 @@ pub fn build_date() -> String {
 }
 
 // Fixed, harmless marker used by /lab/response-marker to test
-// response-body inspection (same value as v-http-lab on purpose).
+// response-body inspection (same value as v-http-apilab on purpose).
 pub const RESPONSE_MARKER: &str = "LAB_RESPONSE_MARKER_7f3a";
 
 pub const DEPARTMENTS: [&str; 5] = [

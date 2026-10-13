@@ -2,7 +2,7 @@
 name = "rs-http-apilab"
 version = "1.0.0"
 edition = "2021"
-description = "Deterministic synthetic HTTP API lab server (Rust port of the v-http-lab concept)"
+description = "Deterministic synthetic HTTP API lab server (Rust port of the v-http-apilab concept)"
 license = "MIT"
 build = "build.rs"
 

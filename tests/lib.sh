@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# lib.sh: shared helpers for the v-http-lab curl test suites.
+# lib.sh: shared helpers for the rs-http-apilab curl test suites.
 #
 # Usage:
 #   ./tests/<group>.sh              # runs all cases of one group

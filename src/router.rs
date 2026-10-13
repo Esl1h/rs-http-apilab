@@ -1,7 +1,7 @@
 // router owns the HTTP surface of the app.
 //
 // axum routes every request through a single catch-all handler into our
-// own deterministic route table (the same design as v-http-lab: one
+// own deterministic route table (the same design as v-http-apilab: one
 // dispatch table so every request that reaches the process gets a
 // correct 405+Allow / 404 JSON answer, a log line and a /lab/calls
 // record, including exotic methods such as TRACE or PROPFIND).
@@ -144,7 +144,7 @@ impl Ctx {
 }
 
 // parse_query decodes a raw query string with urlencoded semantics
-// (last value wins for repeated keys, matching v-http-lab's ctx.query).
+// (last value wins for repeated keys, matching v-http-apilab's ctx.query).
 pub fn parse_query(raw: &str) -> HashMap<String, String> {
     form_urlencoded::parse(raw.as_bytes())
         .map(|(k, v)| (k.into_owned(), v.into_owned()))
@@ -194,7 +194,7 @@ pub fn text_response(status: u16, content_type: &str, body: impl Into<Bytes>) ->
 }
 
 // normalize_words percent-decodes the path and resolves dot-segments
-// (RFC 3986), the same normalization v-http-lab applied before routing:
+// (RFC 3986), the same normalization v-http-apilab applied before routing:
 // "/static/..%2f../x" never reaches a handler, it normalizes first.
 pub fn normalize_words(raw_path: &str) -> Vec<String> {
     let decoded = percent_decode_str(raw_path).decode_utf8_lossy().to_string();
@@ -567,7 +567,7 @@ mod tests {
         assert_eq!(normalize_words("/static/.."), Vec::<String>::new());
         assert_eq!(normalize_words("/a/./b"), vec!["a", "b"]);
         assert_eq!(normalize_words("/health/"), vec!["health"]);
-        // %2f decodes to a separator before routing (same as v-http-lab).
+        // %2f decodes to a separator before routing (same as v-http-apilab).
         assert_eq!(normalize_words("/static/..%2f.."), Vec::<String>::new());
         assert_eq!(normalize_words("/lab/echo"), vec!["lab", "echo"]);
     }

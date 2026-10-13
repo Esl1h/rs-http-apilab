@@ -5,7 +5,7 @@ internal corporate API. Run the binary and the port opens immediately:
 no database, no migrations, no config files (restarting restores the
 initial state).
 
-This is the Rust port of the [v-http-lab](https://github.com/Esl1h/v-http-lab)
+This is the Rust port of the [v-http-apilab](https://github.com/Esl1h/v-http-apilab)
 concept: same endpoints, same environment variables, same error
 envelope, same proof-of-receipt buffer (`/lab/calls`) and the same curl
 test suite, with the HTTP framework swapped from `veb` (V) to `axum`
@@ -33,15 +33,15 @@ Justifications:
 
 1. `axum` is the maintained web framework on hyper 1.x/tokio with
    routing, native multipart and streaming response bodies (the
-   v-http-lab `/lab/stream` required a manual connection takeover;
+   v-http-apilab `/lab/stream` required a manual connection takeover;
    here streaming is native).
 2. The server does not use `axum::serve` (which exposes no HTTP-level
    configuration): the accept loop is ours, with `header_read_timeout`
    (maps `READ_TIMEOUT_MS` with native millisecond granularity) and a
    16 KiB read buffer (the same header-size limit documented in
-   v-http-lab).
+   v-http-apilab).
 3. Routing is a private table behind a catch-all (the same architecture
-   as v-http-lab): every request, including 404/405 and exotic methods
+   as v-http-apilab): every request, including 404/405 and exotic methods
    such as `TRACE`, gets the JSON envelope, the `Allow` header when
    applicable, a log line and a `/lab/calls` record.
 
@@ -223,11 +223,11 @@ needed, unlike veb).
 1. **Headers above 16 KiB** are refused by hyper (read buffer fixed at
    16 KiB) with a generic 431, without JSON, without a log entry and
    without a `/lab/calls` record (validated by execution; same layer
-   and same behavior as veb/fasthttp in v-http-lab).
+   and same behavior as veb/fasthttp in v-http-apilab).
 2. **Bodies above `MAX_BODY_BYTES`** always get a 413 with the JSON
    envelope, log entry and `/lab/calls` record (the bounded read
    happens in the application; there is no 64 MiB backend ceiling like
-   the one v-http-lab had: any excess falls into the same 413).
+   the one v-http-apilab had: any excess falls into the same 413).
 3. **Path traversal with dot segments** (`/static/..%2f..`) is decoded
    and normalized before routing; the request never reaches the
    allowlist. Traversal with backslashes and the like, which reaches
@@ -300,7 +300,7 @@ memory). No database: restarting the process restores the seed.
 
 Backend HTTP determinístico, com dados 100% sintéticos, que simula uma
 API corporativa interna. É o port em Rust do conceito do
-[v-http-lab](https://github.com/Esl1h/v-http-lab): mesmos endpoints,
+[v-http-apilab](https://github.com/Esl1h/v-http-apilab): mesmos endpoints,
 variáveis de ambiente, envelope de erro, buffer de prova `/lab/calls`,
 logs estruturados e a mesma suíte de testes em curl, com o framework
 trocado de `veb` (V) para `axum` (Rust).

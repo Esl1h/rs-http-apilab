@@ -4,7 +4,7 @@
 
 // rs-http-apilab: a deterministic synthetic HTTP API simulator.
 //
-// Rust port of the v-http-lab concept: every response is derived from
+// Rust port of the v-http-apilab concept: every response is derived from
 // fixed synthetic in-memory data; running the binary is enough to have
 // the API answering on the configured port.
 mod admin;
@@ -42,7 +42,7 @@ use tower::ServiceExt;
 // accept loop is ours (the same pattern axum uses internally): it lets
 // READ_TIMEOUT_MS map onto hyper's header read timeout with native
 // millisecond granularity and keeps a 16 KiB read buffer, mirroring
-// v-http-lab's documented header-size limit.
+// v-http-apilab's documented header-size limit.
 const HTTP1_MAX_BUF_SIZE: usize = 16 * 1024;
 
 #[tokio::main]
@@ -131,5 +131,5 @@ async fn exit_on_signal() {
 
 // Connection-level errors (client resets, oversized heads, malformed
 // requests) never reach the application; keep them out of stdout so
-// every stdout line stays valid JSON. v-http-lab had the same property.
+// every stdout line stays valid JSON. v-http-apilab had the same property.
 fn tracing_quiet(_err: hyper::Error) {}

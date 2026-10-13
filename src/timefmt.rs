@@ -1,7 +1,7 @@
 // timefmt: RFC 3339 (UTC, second precision) timestamps without crates.
 //
 // Everything the lab logs is UTC "YYYY-MM-DDTHH:MM:SSZ", the same shape
-// v-http-lab produced with V's format_rfc3339.
+// v-http-apilab produced with V's format_rfc3339.
 pub fn now_rfc3339() -> String {
     let secs = std::time::SystemTime::now()
         .duration_since(std::time::UNIX_EPOCH)

@@ -76,7 +76,7 @@ pub fn load() -> Result<Config, String> {
         ));
     }
     // LOG_LEVEL is validated above but not read at runtime: request log
-    // lines are always emitted at "info", exactly like v-http-lab.
+    // lines are always emitted at "info", exactly like v-http-apilab.
     Ok(Config {
         port: port as u16,
         max_body_bytes,

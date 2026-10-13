@@ -5,7 +5,7 @@ source "$(dirname "$0")/lib.sh"
 
 start_server
 
-UPLOAD_FILE="$(mktemp /tmp/v-http-lab-upload.XXXXXX)"
+UPLOAD_FILE="$(mktemp /tmp/rs-http-apilab-upload.XXXXXX)"
 printf 'SYNTHETIC-UPLOAD-CONTENT' >"$UPLOAD_FILE"
 
 http POST /api/v1/files/upload -F "file=@${UPLOAD_FILE};type=application/octet-stream"

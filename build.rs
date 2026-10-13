@@ -1,5 +1,5 @@
 // Build script: bake the toolchain version and a reproducible build date
-// into the binary (mirroring what v-http-lab does with V_VERSION).
+// into the binary (mirroring what v-http-apilab does with V_VERSION).
 //
 // BUILD_DATE_EPOCH honors SOURCE_DATE_EPOCH so builds are reproducible;
 // without it, the current time is used. The epoch is formatted at runtime

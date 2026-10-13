@@ -49,7 +49,7 @@ struct EventLine<'a> {
 
 // write_request_line emits the single per-request JSON line to stdout.
 // std's stdout lock makes each writeln atomic enough for line readers;
-// like v-http-lab, writes are serialized behind a single println! call.
+// like v-http-apilab, writes are serialized behind a single println! call.
 pub fn write_request_line(entry: &LogEntry) {
     if let Ok(line) = serde_json::to_string(entry) {
         println!("{line}");
