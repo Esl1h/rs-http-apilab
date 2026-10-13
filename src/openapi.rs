@@ -23,7 +23,7 @@ pub async fn swagger_ui(_ctx: Ctx) -> Response {
 }
 
 const SWAGGER_HTML: &str = r#"<!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="en">
 <head>
   <meta charset="utf-8">
   <title>rs-http-apilab API</title>
